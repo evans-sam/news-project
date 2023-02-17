@@ -1,4 +1,4 @@
-import type { Database } from './database';
+import type { Database } from './database.gen';
 import type { GetResult } from '@supabase/postgrest-js/dist/module/select-query-parser';
 
 type Tables = Database['public']['Tables'];
@@ -22,24 +22,21 @@ type GetResolvedResult<SP extends SplitRelStr_SuccessProps> = GetResult<
  * @template RelType The type of relation. e.g. `one` or `many`. This decides if the returned relation is an array of objects/single object.
  */
 export type ResolveRelationQuery<
-    RelStr extends string,
-    RelType extends 'one' | 'many' = 'many'
+  RelStr extends string,
+  RelType extends 'one' | 'many' = 'many'
 > = SplitRelStr<RelStr> extends SplitRelStr_SuccessProps
-    ? {
-        [K in SplitRelStr<RelStr>['table']]: RelType extends 'one'
-            ? GetResolvedResult<SplitRelStr<RelStr>> | null
-            : GetResolvedResult<SplitRelStr<RelStr>>[];
-    }
-    : { error: SplitRelStr<RelStr>['error'] };
+  ? {
+    [K in SplitRelStr<RelStr>['table']]: RelType extends 'one'
+      ? GetResolvedResult<SplitRelStr<RelStr>> | null
+      : GetResolvedResult<SplitRelStr<RelStr>>[];
+  }
+  : { error: SplitRelStr<RelStr>['error'] };
 
 /**
  * @template R { data } response you get from `const { data, error } = await supabase.from('tablename').select(...)`
  * @template RelObj Object that contains the table name and the resolved relation.
  */
-export type ResolveArrayResponse<
-  R extends any[],
-  RelObj extends object
-> = (R[0] & RelObj)[];
+export type ResolveArrayResponse<R extends any[], RelObj extends object> = (R[0] & RelObj)[];
 export type ResolveResponse<R extends any, RelObj extends object> = R & RelObj;
 
 export type ArrayElement<T> = T extends readonly unknown[] ? T[0] : never;

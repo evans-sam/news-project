@@ -34,12 +34,7 @@ export default function Post({ post }: Props) {
                 <title>{post.title}</title>
                 <meta property="og:image" content={post.image} />
               </Head>
-              <PostHeader
-                title={post.title}
-                image={post.image}
-                date={post.created_at}
-                author={post.author}
-              />
+              <PostHeader title={post.title} image={post.image} date={post.created_at} author={post.author} />
               <PostBody content={post.content} />
             </article>
           </>

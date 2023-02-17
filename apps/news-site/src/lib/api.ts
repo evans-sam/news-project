@@ -23,7 +23,7 @@ export async function getPostBySlug(slug: string, fields = []) {
     .select(fields.join(', '))
     .eq('slug', slug)
     .single();
-  if (!data?.length || error) return [];
+  if (!data || error) return [];
   type PostsResponse = ResolveResponse<typeof data, Articles>;
   return data as PostsResponse;
 }
