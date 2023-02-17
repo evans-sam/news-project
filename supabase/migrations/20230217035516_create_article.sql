@@ -10,7 +10,7 @@ create table "public"."articles" (
 );
 
 
-alter table "public"."articles" enable row level security;
+-- alter table "public"."articles" enable row level security;
 
 CREATE UNIQUE INDEX articles_pkey ON public.articles USING btree (id);
 

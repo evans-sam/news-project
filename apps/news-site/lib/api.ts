@@ -1,19 +1,17 @@
 import fs from 'fs'
 import { join } from 'path'
-import matter from 'gray-matter'
+import { DatabaseClient } from 'clients'
 
-const postsDirectory = join(process.cwd(), '_posts')
+const DB_URL = process.env.SUPABASE_URL;
+const DB_KEY = process.env.SUPABASE_KEY;
 
-export function getPostSlugs() {
-  return fs.readdirSync(postsDirectory)
+export async function getPostSlugs() {
+  let newVar = await new DatabaseClient(DB_URL, DB_KEY).client.from('articles').select('slug');
+  return newVar;
 }
 
-export function getPostBySlug(slug: string, fields: string[] = []) {
-  const realSlug = slug.replace(/\.md$/, '')
-  const fullPath = join(postsDirectory, `${realSlug}.md`)
-  const fileContents = fs.readFileSync(fullPath, 'utf8')
-  const { data, content } = matter(fileContents)
-
+export async function getPostBySlug(slug: string, fields: string[] = []) {
+  const { data, error } = await new DatabaseClient(DB_URL, DB_KEY).client.from('articles').select('*').eq('slug', slug).single();
   type Items = {
     [key: string]: string
   }
@@ -22,13 +20,6 @@ export function getPostBySlug(slug: string, fields: string[] = []) {
 
   // Ensure only the minimal needed data is exposed
   fields.forEach((field) => {
-    if (field === 'slug') {
-      items[field] = realSlug
-    }
-    if (field === 'content') {
-      items[field] = content
-    }
-
     if (typeof data[field] !== 'undefined') {
       items[field] = data[field]
     }
@@ -37,10 +28,7 @@ export function getPostBySlug(slug: string, fields: string[] = []) {
   return items
 }
 
-export function getAllPosts(fields: string[] = []) {
-  const slugs = getPostSlugs()
-  return slugs
-      .map((slug) => getPostBySlug(slug, fields))
-      // sort posts by date in descending order
-      .sort((post1, post2) => (post1.date > post2.date ? -1 : 1))
+export async function getAllPosts(fields: string[] = []) {
+  const {data, error } = await getPostSlugs()
+  return await Promise.all(data.map(async ({ slug }) => await getPostBySlug(slug, fields)));
 }

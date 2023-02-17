@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "declaration": true,
+    "target": "ES5",
+    "outDir": "dist",
+    "rootDir": "src",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "tsBuildInfoFile": "dist/.tsbuildinfo",
+    // Used to allow reference mapping
+    "composite": true
+  }
+}

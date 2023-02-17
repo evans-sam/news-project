@@ -36,12 +36,12 @@ export default function Post({ post, preview }: Props) {
                 <title>
                   {post.title} | Next.js Blog Example with {CMS_NAME}
                 </title>
-                <meta property="og:image" content={post.ogImage.url} />
+                <meta property="og:image" content={post.image} />
               </Head>
               <PostHeader
                 title={post.title}
-                coverImage={post.coverImage}
-                date={post.date}
+                image={post.image}
+                date={post.created_at}
                 author={post.author}
               />
               <PostBody content={post.content} />
@@ -60,16 +60,14 @@ type Params = {
 }
 
 export async function getStaticProps({ params }: Params) {
-  const post = getPostBySlug(params.slug, [
+  const {content, ...post} = await getPostBySlug(params.slug, [
     'title',
-    'date',
+    'created_at',
     'slug',
     'author',
     'content',
-    'ogImage',
-    'coverImage',
+    'image',
   ])
-  const content = await markdownToHtml(post.content || '')
 
   return {
     props: {
@@ -82,13 +80,13 @@ export async function getStaticProps({ params }: Params) {
 }
 
 export async function getStaticPaths() {
-  const posts = getAllPosts(['slug'])
+  const posts = await getAllPosts(['slug'])
 
   return {
-    paths: posts.map((post) => {
+    paths: posts.map(({slug}) => {
       return {
         params: {
-          slug: post.slug,
+          slug,
         },
       }
     }),
