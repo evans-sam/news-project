@@ -12,8 +12,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "eslint-config-custom": "workspace:*",
-    "tsconfig": "workspace:*"
+    "eslint-config-custom": "workspace:0.0.0",
+    "tsconfig": "workspace:0.0.0"
   },
   "dependencies": {
     "@supabase/postgrest-js": "^1.4.0",

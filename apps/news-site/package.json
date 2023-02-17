@@ -6,22 +6,24 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "clean": "rm -rf .next && rm -rf node_modules && rm -rf .turbo"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.8.0",
-    "classnames": "^2.3.1",
-    "clients": "workspace:*",
-    "date-fns": "^2.28.0",
+    "classnames": "^2.3.2",
+    "clients": "workspace:0.0.0",
+    "date-fns": "^2.29.3",
     "gray-matter": "^4.0.3",
-    "remark": "^14.0.2"
+    "remark": "^14.0.2",
+    "sharp": "^0.31.3"
   },
   "devDependencies": {
     "@supabase/postgrest-js": "^1.4.0",
-    "autoprefixer": "^10.4.7",
-    "eslint-config-custom": "workspace:*",
-    "postcss": "^8.4.14",
-    "tailwindcss": "^3.1.4",
-    "tsconfig": "workspace:*"
+    "autoprefixer": "^10.4.13",
+    "eslint-config-custom": "workspace:0.0.0",
+    "postcss": "^8.4.21",
+    "tailwindcss": "^3.2.7",
+    "tsconfig": "workspace:0.0.0"
   }
 }
