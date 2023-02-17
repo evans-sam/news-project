@@ -25,7 +25,7 @@ jobs:
       - name: Verify generated types are checked in
         run: |
           npm run types
-          if ! git diff --ignore-space-at-eol --exit-code --quiet types.gen.ts; then
+          if ! git diff --ignore-space-at-eol --exit-code --quiet packages/clients/src/db-client/database.gen.ts; then
             echo "Detected uncommitted changes after build. See status below:"
             git diff
             exit 1
