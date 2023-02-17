@@ -9,9 +9,6 @@ create table "public"."articles" (
     "author" text
 );
 
-
--- alter table "public"."articles" enable row level security;
-
 CREATE UNIQUE INDEX articles_pkey ON public.articles USING btree (id);
 
 CREATE UNIQUE INDEX articles_slug_key ON public.articles USING btree (slug);
