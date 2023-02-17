@@ -1,7 +1,7 @@
 import { databaseClient, ResolveArrayResponse, ResolveRelationQuery, ResolveResponse } from 'clients';
 
-const DB_URL = process.env.SUPABASE_URL;
-const DB_KEY = process.env.SUPABASE_ANON_KEY;
+const DB_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const DB_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
 export async function getPostSlugs() {
   const articlesSlug = 'articles(slug)';
