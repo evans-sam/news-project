@@ -1,11 +1,11 @@
 type PostType = {
-  slug: string
-  title: string
-  created_at: string
-  image: string
-  author: string
-  excerpt: string
-  content: string
-}
+  slug: string;
+  title: string;
+  created_at: string;
+  image: string;
+  author: string;
+  excerpt: string;
+  content: string;
+};
 
-export default PostType
+export default PostType;

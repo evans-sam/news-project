@@ -1,14 +1,14 @@
-import Avatar from './avatar'
-import DateFormatter from './date-formatter'
-import CoverImage from './cover-image'
-import PostTitle from './post-title'
+import Avatar from "./avatar";
+import DateFormatter from "./date-formatter";
+import CoverImage from "./cover-image";
+import PostTitle from "./post-title";
 
 type Props = {
-  title: string
-  image: string
-  date: string
-  author: string
-}
+  title: string;
+  image: string;
+  date: string;
+  author: string;
+};
 
 const PostHeader = ({ title, image, date, author }: Props) => {
   return (
@@ -29,7 +29,7 @@ const PostHeader = ({ title, image, date, author }: Props) => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default PostHeader
+export default PostHeader;
