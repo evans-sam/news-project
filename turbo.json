@@ -1,6 +1,13 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": ["**/.env.*local"],
+  "globalDependencies": [
+    "**/.env.*local",
+    ".env.local"
+  ],
+  "globalEnv": [
+    "SUPABASE_URL",
+    "SUPABASE_KEY"
+  ],
   "pipeline": {
     "build": {
       "outputs": [
@@ -9,7 +16,9 @@
       ]
     },
     "test": {
-      "outputs": ["coverage/**"],
+      "outputs": [
+        "coverage/**"
+      ],
       "dependsOn": []
     },
     "lint": {

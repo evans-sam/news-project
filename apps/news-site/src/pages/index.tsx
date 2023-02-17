@@ -5,7 +5,6 @@ import Intro from '../components/intro'
 import Layout from '../components/layout'
 import { getAllPosts } from '../lib/api'
 import Head from 'next/head'
-import { CMS_NAME } from '../lib/constants'
 import Post from '../interfaces/post'
 
 type Props = {
@@ -13,27 +12,26 @@ type Props = {
 }
 
 export default function Index({ allPosts }: Props) {
-  const heroPost = allPosts[0]
-  const morePosts = allPosts.slice(1)
+  const [heroPost, ...morePosts] = allPosts
   return (
     <>
       <Layout>
         <Head>
-          <title>{`Next.js Blog Example with ${CMS_NAME}`}</title>
+          <title>Next.js Blog Example</title>
         </Head>
         <Container>
           <Intro />
           {heroPost && (
-            <HeroPost
-              title={heroPost.title}
-              image={heroPost.image}
-              date={heroPost.created_at}
-              author={heroPost.author}
-              slug={heroPost.slug}
-              excerpt={heroPost.excerpt}
-            />
+              <HeroPost
+                  title={heroPost.title}
+                  image={heroPost.image}
+                  date={heroPost.created_at}
+                  author={heroPost.author}
+                  slug={heroPost.slug}
+                  excerpt={heroPost.excerpt}
+              />
           )}
-          {morePosts.length > 0 && <MoreStories posts={morePosts} />}
+          {morePosts?.length && <MoreStories posts={morePosts}/>}
         </Container>
       </Layout>
     </>
@@ -41,16 +39,17 @@ export default function Index({ allPosts }: Props) {
 }
 
 export const getStaticProps = async () => {
-  const allPosts = await getAllPosts([
+  const response = await getAllPosts([
     'title',
     'created_at',
     'slug',
     'author',
     'image',
     'excerpt',
+    'content',
   ])
 
   return {
-    props: { allPosts },
+    props: {allPosts: response},
   }
 }

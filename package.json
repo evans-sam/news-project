@@ -1,6 +1,7 @@
 {
   "private": true,
   "scripts": {
+    "types": "supabase gen types typescript --local --schema public > packages/clients/src/db-client/database.ts",
     "build": "turbo run build",
     "clean": "turbo run clean",
     "dev": "turbo run dev",

@@ -1,25 +1,25 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./components/**/*.tsx', './pages/**/*.tsx'],
-  theme: {
+  content: ['./src/components/**/*.tsx', './src/pages/**/*.tsx'],
+  theme  : {
     extend: {
-      colors: {
+      colors       : {
         'accent-1': '#FAFAFA',
         'accent-2': '#EAEAEA',
         'accent-7': '#333',
-        success: '#0070f3',
-        cyan: '#79FFE1',
+        success   : '#0070f3',
+        cyan      : '#79FFE1'
       },
-      spacing: {
-        28: '7rem',
+      spacing      : {
+        28: '7rem'
       },
       letterSpacing: {
-        tighter: '-.04em',
+        tighter: '-.04em'
       },
-      lineHeight: {
-        tight: 1.2,
+      lineHeight   : {
+        tight: 1.2
       },
-      fontSize: {
+      fontSize     : {
         '5xl': '2.5rem',
         '6xl': '2.75rem',
         '7xl': '4.5rem',
