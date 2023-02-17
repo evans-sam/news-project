@@ -6,7 +6,7 @@
     "clean": "turbo run clean",
     "dev": "turbo run dev",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "lint": "turbo run lint",
+    "lint": "turbo run lint -- --fix",
     "test": "turbo run test"
   },
   "dependencies": {
@@ -25,5 +25,20 @@
     "turbo": "latest",
     "typescript": "^4.7.4"
   },
-  "packageManager": "pnpm@7.15.0"
+  "packageManager": "pnpm@7.15.0",
+  "prettier": {
+    "printWidth": 120,
+    "tabWidth": 2,
+    "useTabs": false,
+    "semi": true,
+    "singleQuote": true,
+    "quoteProps": "as-needed",
+    "jsxSingleQuote": false,
+    "trailingComma": "es5",
+    "bracketSpacing": true,
+    "jsxBracketSameLine": false,
+    "arrowParens": "always",
+    "endOfLine": "lf",
+    "embeddedLanguageFormatting": "auto"
+  }
 }

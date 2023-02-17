@@ -1,6 +1,6 @@
-import Footer from "./footer";
-import Meta from "./meta";
-import React from "react";
+import Footer from './footer';
+import Meta from './meta';
+import React from 'react';
 
 type Props = {
   preview?: boolean;

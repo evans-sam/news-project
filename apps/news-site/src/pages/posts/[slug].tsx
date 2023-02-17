@@ -1,14 +1,14 @@
-import { useRouter } from "next/router";
-import ErrorPage from "next/error";
-import Container from "../../components/container";
-import PostBody from "../../components/post-body";
-import Header from "../../components/header";
-import PostHeader from "../../components/post-header";
-import Layout from "../../components/layout";
-import { getAllPosts, getPostBySlug } from "../../lib/api";
-import PostTitle from "../../components/post-title";
-import Head from "next/head";
-import type PostType from "../../interfaces/post";
+import { useRouter } from 'next/router';
+import ErrorPage from 'next/error';
+import Container from '../../components/container';
+import PostBody from '../../components/post-body';
+import Header from '../../components/header';
+import PostHeader from '../../components/post-header';
+import Layout from '../../components/layout';
+import { getAllPosts, getPostBySlug } from '../../lib/api';
+import PostTitle from '../../components/post-title';
+import Head from 'next/head';
+import type PostType from '../../interfaces/post';
 
 type Props = {
   post: PostType;
@@ -57,13 +57,13 @@ type Params = {
 
 export async function getStaticProps({ params }: Params) {
   const post = await getPostBySlug(params.slug, [
-    "title",
-    "created_at",
-    "slug",
-    "author",
-    "content",
-    "image",
-    "content",
+    'title',
+    'created_at',
+    'slug',
+    'author',
+    'content',
+    'image',
+    'content',
   ]);
 
   return {
@@ -74,8 +74,8 @@ export async function getStaticProps({ params }: Params) {
 }
 
 export async function getStaticPaths() {
-  const data = await getAllPosts(["slug", "author"]);
-  
+  const data = await getAllPosts(['slug', 'author']);
+
   return {
     paths: data.map(({ slug, author }) => {
       return {
