@@ -27,10 +27,10 @@ export type ResolveRelationQuery<
   RelType extends 'one' | 'many' = 'many'
 > = SplitRelStr<RelStr> extends SplitRelStr_SuccessProps
   ? {
-    [K in SplitRelStr<RelStr>['table']]: RelType extends 'one'
-      ? GetResolvedResult<SplitRelStr<RelStr>> | null
-      : GetResolvedResult<SplitRelStr<RelStr>>[];
-  }
+      [K in SplitRelStr<RelStr>['table']]: RelType extends 'one'
+        ? GetResolvedResult<SplitRelStr<RelStr>> | null
+        : GetResolvedResult<SplitRelStr<RelStr>>[];
+    }
   : { error: SplitRelStr<RelStr>['error'] };
 
 /**
