@@ -1,42 +1,34 @@
-import { databaseClient, ResolveArrayResponse, ResolveRelationQuery, ResolveResponse } from 'clients';
+import { Article, databaseClient } from 'clients';
 
 const DB_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const DB_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
 export async function getPostSlugs() {
-  const articlesSlug = 'articles(slug)';
-  type Articles = ResolveRelationQuery<typeof articlesSlug, 'one'>;
-
   const { data, error } = await databaseClient(DB_URL, DB_KEY).from('articles').select('slug');
   if (!data?.length || error) return [];
-  type PostSlugsResponse = ResolveArrayResponse<typeof data, Articles>;
 
-  return data as PostSlugsResponse;
+  return data as unknown as Pick<Article, 'slug'>[];
 }
 
-export async function getPostBySlug(slug: string, fields = []) {
-  const article = `articles(${fields.join(', ')}`;
-  type Articles = ResolveRelationQuery<typeof article, 'one'>;
-
+export async function getPostBySlug<Keys extends keyof Article>(slug: string, fields: Keys[] = []) {
   const { data, error } = await databaseClient(DB_URL, DB_KEY)
     .from('articles')
-    .select(fields.join(', '))
+    .select(fields.length ? fields.join(', ') : '*')
     .eq('slug', slug)
     .single();
-  if (!data || error) return [];
-  type PostsResponse = ResolveResponse<typeof data, Articles>;
-  return data as PostsResponse;
+
+  if (!data || error) return null;
+
+  return data as unknown as Pick<Article, Keys>;
 }
 
-export async function getAllPosts(fields = []) {
-  const article = `articles(${fields.join(', ')}`;
-  type Articles = ResolveRelationQuery<typeof article>;
-
+export async function getAllPosts<Keys extends keyof Article>(fields: Keys[] = []) {
   const { data, error } = await databaseClient(DB_URL, DB_KEY)
     .from('articles')
-    .select(fields.join(', '))
+    .select(fields.length ? fields.join(', ') : '*')
     .order('created_at', { ascending: false });
+
   if (!data?.length || error) return [];
-  type PostsResponse = ResolveArrayResponse<typeof data, Articles>;
-  return data as PostsResponse;
+
+  return data as unknown as Pick<Article, Keys>[];
 }

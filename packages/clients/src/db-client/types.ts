@@ -2,6 +2,7 @@ import type { Database } from './database.gen';
 import type { GetResult } from '@supabase/postgrest-js/dist/module/select-query-parser';
 
 type Tables = Database['public']['Tables'];
+export type Article = Database['public']['Tables']['articles']['Row'];
 type SplitRelStr_SuccessProps<T = keyof Tables, Q = string> = {
   table: T;
   query: Q;
@@ -26,10 +27,10 @@ export type ResolveRelationQuery<
   RelType extends 'one' | 'many' = 'many'
 > = SplitRelStr<RelStr> extends SplitRelStr_SuccessProps
   ? {
-    [K in SplitRelStr<RelStr>['table']]: RelType extends 'one'
-      ? GetResolvedResult<SplitRelStr<RelStr>> | null
-      : GetResolvedResult<SplitRelStr<RelStr>>[];
-  }
+      [K in SplitRelStr<RelStr>['table']]: RelType extends 'one'
+        ? GetResolvedResult<SplitRelStr<RelStr>> | null
+        : GetResolvedResult<SplitRelStr<RelStr>>[];
+    }
   : { error: SplitRelStr<RelStr>['error'] };
 
 /**
