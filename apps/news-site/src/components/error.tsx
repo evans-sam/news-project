@@ -8,15 +8,14 @@ const statusCodes: { [code: number]: string } = {
 };
 
 export type ErrorProps = {
-  statusCode: number
-  title?: string
-  withDarkMode?: boolean
-}
+  statusCode: number;
+  title?: string;
+  withDarkMode?: boolean;
+};
 
 const styles: { [k: string]: React.CSSProperties } = {
   error: {
-    fontFamily:
-      'system-ui,"Segoe UI",Roboto,Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji"',
+    fontFamily: 'system-ui,"Segoe UI",Roboto,Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji"',
     height: '100vh',
     textAlign: 'center',
     display: 'flex',
@@ -24,12 +23,12 @@ const styles: { [k: string]: React.CSSProperties } = {
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  
+
   desc: {
     display: 'inline-block',
     textAlign: 'left',
   },
-  
+
   h1: {
     display: 'inline-block',
     margin: '0 20px 0 0',
@@ -39,14 +38,14 @@ const styles: { [k: string]: React.CSSProperties } = {
     verticalAlign: 'top',
     lineHeight: '49px',
   },
-  
+
   h2: {
     fontSize: 14,
     fontWeight: 400,
     lineHeight: '49px',
     margin: 0,
   },
-}
+};
 
 /**
  * `Error` component used for handling errors.

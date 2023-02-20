@@ -17,15 +17,9 @@ export async function generateStaticParams() {
 }
 
 export default async function Page({ params: { slug } }: Props) {
-  const post = await getPostBySlug(slug, [
-    'title',
-    'created_at',
-    'author',
-    'content',
-    'image',
-  ]);
-  
-  if(!post) notFound();
+  const post = await getPostBySlug(slug, ['title', 'created_at', 'author', 'content', 'image']);
+
+  if (!post) notFound();
 
   return (
     <>
