@@ -16,7 +16,8 @@
     "date-fns": "^2.29.3",
     "gray-matter": "^4.0.3",
     "remark": "^14.0.2",
-    "sharp": "^0.31.3"
+    "sharp": "^0.31.3",
+    "zod": "^3.20.6"
   },
   "devDependencies": {
     "@supabase/postgrest-js": "^1.4.0",
