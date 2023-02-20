@@ -2,6 +2,7 @@ import React from 'react';
 import PostBody from '../../components/post-body';
 import PostHeader from '../../components/post-header';
 import { getPostBySlug, getPostSlugs } from '../../lib/api';
+import { notFound } from 'next/navigation';
 
 type Props = {
   params: Params;
@@ -16,18 +17,20 @@ export async function generateStaticParams() {
 }
 
 export default async function Page({ params: { slug } }: Props) {
-  const { author, content, created_at, image, title } = await getPostBySlug(slug, [
+  const post = await getPostBySlug(slug, [
     'title',
     'created_at',
     'author',
     'content',
     'image',
   ]);
+  
+  if(!post) notFound();
 
   return (
     <>
-      <PostHeader title={title} image={image} date={created_at} author={author} />
-      <PostBody content={content} />
+      <PostHeader title={post.title} image={post.image} date={post.created_at} author={post.author} />
+      <PostBody content={post.content} />
     </>
   );
 }
