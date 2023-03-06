@@ -5,4 +5,8 @@ module.exports = {
   experimental: {
     appDir: true,
   },
+  images: {
+    loader: 'custom',
+    loaderFile: './supabase-image-loader.js',
+  },
 };
