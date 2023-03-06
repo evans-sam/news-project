@@ -8,7 +8,7 @@ const Avatar = ({ name }: Props) => {
   return (
     <div className="flex items-center">
       <Image
-        src={'/assets/blog/authors/jj.jpeg'}
+        src={'/assets/authors/jj.jpeg'}
         className="w-12 h-12 rounded-full mr-4"
         alt={name}
         width={60}

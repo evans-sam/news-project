@@ -6,7 +6,7 @@ image: "/assets/blog/hello-world/cover.jpg"
 created_at: "2020-03-16T05:35:07.322Z"
 author:
 name: Tim Neutkens
-picture: "/assets/blog/authors/tim.jpeg"
+picture: "/assets/authors/tim.jpeg"
 ogImage:
 url: "/assets/blog/hello-world/cover.jpg"
 ---
