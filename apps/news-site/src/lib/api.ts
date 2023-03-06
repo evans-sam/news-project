@@ -1,4 +1,4 @@
-import { Article, databaseClient } from 'clients';
+import { Article, databaseClient, Row } from 'clients';
 
 const DB_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const DB_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -7,10 +7,10 @@ export async function getPostSlugs() {
   const { data, error } = await databaseClient(DB_URL, DB_KEY).from('articles').select('slug');
   if (!data?.length || error) return [];
 
-  return data as unknown as Pick<Article, 'slug'>[];
+  return data satisfies Pick<Row<Article>, 'slug'>[];
 }
 
-export async function getPostBySlug<Keys extends keyof Article>(slug: string, fields: Keys[] = []) {
+export async function getPostBySlug<Keys extends keyof Row<Article>>(slug: string, fields: Keys[] = []) {
   const { data, error } = await databaseClient(DB_URL, DB_KEY)
     .from('articles')
     .select(fields.length ? fields.join(', ') : '*')
@@ -19,10 +19,10 @@ export async function getPostBySlug<Keys extends keyof Article>(slug: string, fi
 
   if (!data || error) return null;
 
-  return data as unknown as Pick<Article, Keys>;
+  return data as unknown as Pick<Row<Article>, Keys>;
 }
 
-export async function getAllPosts<Keys extends keyof Article>(fields: Keys[] = []) {
+export async function getAllPosts<Keys extends keyof Row<Article>>(fields: Keys[] = []) {
   const { data, error } = await databaseClient(DB_URL, DB_KEY)
     .from('articles')
     .select(fields.length ? fields.join(', ') : '*')
@@ -30,5 +30,5 @@ export async function getAllPosts<Keys extends keyof Article>(fields: Keys[] = [
 
   if (!data?.length || error) return [];
 
-  return data as unknown as Pick<Article, Keys>[];
+  return data as unknown as Pick<Row<Article>, Keys>[];
 }

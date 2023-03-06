@@ -6,7 +6,7 @@ image: "/assets/blog/preview/cover.jpg"
 created_at: "2020-03-16T05:35:07.322Z"
 author:
 name: Joe Haddad
-picture: "/assets/blog/authors/joe.jpeg"
+picture: "/assets/authors/joe.jpeg"
 ogImage:
 url: "/assets/blog/preview/cover.jpg"
 ---
