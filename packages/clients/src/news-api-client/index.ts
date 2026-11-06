@@ -1,8 +1,24 @@
-import type { ArticleResponse, EverythingRequest, HeadlinesRequest, NewsResponse, SourcesResponse } from './types';
+import type {
+  ArticleResponse,
+  EverythingRequest,
+  HeadlinesRequest,
+  NewsEndpoint,
+  NewsResponse,
+  SourcesResponse,
+} from './types';
+import { SourcesRequest } from './types';
+
+export * from './types';
+export * from './validation-types';
 
 const BASE_URL = 'https://newsapi.org';
 
-export default class NewsClient {
+export type NewArticleRequest =
+  | ({ route: 'top-headlines' } & HeadlinesRequest)
+  | ({ route: 'everything' } & EverythingRequest)
+  | ({ route: 'sources' } & SourcesRequest);
+
+export class NewsClient {
   private readonly apiKey: string;
   private readonly defaultHeaders: HeadersInit;
 
@@ -14,23 +30,32 @@ export default class NewsClient {
     });
   }
 
+  async query<Req extends NewArticleRequest & ({ route: 'top-headlines' } | { route: 'everything' })>(
+    request: Req
+  ): Promise<NewsResponse<ArticleResponse>>;
+  async query<Req extends NewArticleRequest & { route: 'sources' }>(
+    request: Req
+  ): Promise<NewsResponse<SourcesResponse>>;
+  async query(request: NewArticleRequest): Promise<NewsResponse<ArticleResponse | SourcesResponse>> {
+    const { route, ...params } = request;
+    const url = this.getURL(route, params);
+    return this.request(url);
+  }
+
   async topHeadlines(params: HeadlinesRequest): Promise<NewsResponse<ArticleResponse>> {
-    const url = this.getURL('/v2/top-headlines', params);
-    return this.query(url);
+    return this.query({ route: 'top-headlines', ...params });
   }
 
   async everything(params: EverythingRequest): Promise<NewsResponse<ArticleResponse>> {
-    const url = this.getURL('/v2/everything', params);
-    return this.query(url);
+    return this.query({ route: 'everything', ...params });
   }
 
   async sources(params: EverythingRequest): Promise<NewsResponse<SourcesResponse>> {
-    const url = this.getURL('/v2/sources', params);
-    return this.query(url);
+    return this.query({ route: 'sources', ...params });
   }
 
-  private getURL(endpoint: string, params: any) {
-    const url = new URL(endpoint, BASE_URL);
+  private getURL(endpoint: NewsEndpoint, params: any) {
+    const url = new URL(`v2/${endpoint}`, BASE_URL);
     const queryParams = this.getParams(params);
     url.search = queryParams.toString();
     return url;
@@ -42,7 +67,7 @@ export default class NewsClient {
     );
 
     return new URLSearchParams({
-      q,
+      q: q ?? '',
       searchIn: searchIn?.join(',') ?? '',
       sources: sources?.join(',') ?? '',
       domains: domains?.join(',') ?? '',
@@ -53,7 +78,7 @@ export default class NewsClient {
     });
   }
 
-  private async query(url: URL | string) {
+  private async request(url: URL | string) {
     try {
       const response = await fetch(url, {
         headers: this.defaultHeaders,

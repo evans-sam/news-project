@@ -2,7 +2,12 @@ import type { Database } from './database.gen';
 import type { GetResult } from '@supabase/postgrest-js/dist/module/select-query-parser';
 
 type Tables = Database['public']['Tables'];
-export type Article = Database['public']['Tables']['articles']['Row'];
+export type Table = keyof Tables;
+export type Row<T extends Table> = Tables[T]['Row'];
+export type Insert<T extends Table> = Tables[T]['Insert'];
+export type Update<T extends Table> = Tables[T]['Update'];
+export type Article = 'articles';
+
 type SplitRelStr_SuccessProps<T = keyof Tables, Q = string> = {
   table: T;
   query: Q;

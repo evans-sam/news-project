@@ -1,7 +1,14 @@
+export type NewArticleRequest =
+  | ({ route: 'top-headlines' } & HeadlinesRequest)
+  | ({ route: 'everything' } & EverythingRequest)
+  | ({ route: 'sources' } & SourcesRequest);
+
+export type NewsEndpoint = 'top-headlines' | 'everything' | 'sources';
+
 export type NewsRequest = {
-  q: string;
-  pageSize: number;
-  page: number;
+  q?: string;
+  pageSize?: number;
+  page?: number;
 };
 
 export type NewsResponse<K> = K | ErrorResponse;
@@ -30,7 +37,7 @@ export type SourcesRequest = {
 export type ArticleResponse = {
   status: 'ok';
   totalResults: number;
-  articles: Article[];
+  articles: NewsArticle[];
 };
 
 export type SourcesResponse = {
@@ -44,7 +51,7 @@ export type ErrorResponse = {
   message: string;
 };
 
-export type Article = {
+export type NewsArticle = {
   source: Source;
   author: string;
   title: string;
